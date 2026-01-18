@@ -1,0 +1,15 @@
+# Core
+numpy>=1.23
+torch>=2.0
+scipy>=1.10
+msgpack>=1.0
+tqdm>=4.66
+pyyaml>=6.0
+
+# Optional (recommended for paper-scale runs)
+transformers>=4.40
+datasets>=2.19
+torchvision>=0.17
+evaluate>=0.4
+accelerate>=0.30
+zstandard>=0.22

@@ -1,0 +1,39 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mcwc"
+version = "0.1.0"
+description = "MCWC: Motion-Compensated Weight Compression (reference implementation)"
+readme = "README.md"
+requires-python = ">=3.9"
+license = {text = "MIT"}
+authors = [{name = "MCWC Authors"}]
+keywords = ["model-compression", "weight-compression", "predictive-coding", "entropy-coding"]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "License :: OSI Approved :: MIT License",
+]
+
+dependencies = [
+  "numpy>=1.23",
+  "torch>=2.0",
+  "scipy>=1.10",
+  "msgpack>=1.0",
+  "tqdm>=4.66",
+  "pyyaml>=6.0",
+]
+
+[project.optional-dependencies]
+hf = [
+  "transformers>=4.40",
+  "datasets>=2.19",
+  "torchvision>=0.17",
+  "evaluate>=0.4",
+  "accelerate>=0.30",
+]
+zstd = ["zstandard>=0.22"]
+
+[tool.setuptools.packages.find]
+include = ["mcwc*"]

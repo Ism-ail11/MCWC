@@ -1,0 +1,6 @@
+model: google/vit-base-patch16-224
+k: 4
+qbits: 8
+align: greedy
+compress: zstd
+use_sortproj: false
