@@ -6,8 +6,6 @@ This repository provides a **reference implementation** of **MCWC: Motion-Compen
 2. **Layer-sequential prediction** with **keyframes** and **residual coding**.
 3. **Quantization + compressed bitstream** suitable for fast decode.
 
-The code is organized as a standard GitHub project and is **Windows-friendly**.
-
 ## Folder structure
 
 ```
