@@ -4,7 +4,10 @@ import re
 from dataclasses import dataclass
 from typing import Dict, List, Optional, Tuple
 
-import torch
+try:
+    import torch
+except ImportError:
+    torch = None  # type: ignore
 
 
 @dataclass
