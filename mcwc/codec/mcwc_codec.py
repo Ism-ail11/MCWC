@@ -4,8 +4,14 @@ import json
 from dataclasses import dataclass
 from typing import Any, Dict, List, Optional, Tuple
 
-import numpy as np
-import torch
+try:
+    import numpy as np
+except ImportError:
+    np = None  # type: ignore
+try:
+    import torch
+except ImportError:
+    torch = None  # type: ignore
 
 from mcwc.align.similarity import cosine_similarity_matrix
 from mcwc.align.assignment import AlignMethod, solve_alignment, solve_alignment_sortproj
@@ -81,6 +87,11 @@ class MCWCCodec:
         self.cfg = cfg
 
     def encode(self, model: torch.nn.Module, model_id: str, out_path: str, store_config_json: Optional[str] = None) -> None:
+        if torch is None:
+            raise ImportError("PyTorch is required for MCWCCodec.encode. Install PyTorch from https://pytorch.org/")
+        if np is None:
+            raise ImportError("NumPy is required for MCWCCodec.encode. Install numpy via pip")
+
         state = model.state_dict()
         specs = infer_ffn_specs_from_state_dict(state)
 
@@ -214,6 +225,11 @@ class MCWCCodec:
         write_bitstream(out_path, header=header, blobs=blobs, compress=self.cfg.compress)
 
     def decode(self, bitstream_path: str, model: torch.nn.Module) -> torch.nn.Module:
+        if torch is None:
+            raise ImportError("PyTorch is required for MCWCCodec.decode. Install PyTorch from https://pytorch.org/")
+        if np is None:
+            raise ImportError("NumPy is required for MCWCCodec.decode. Install numpy via pip")
+
         header, blobs = read_bitstream(bitstream_path)
         records = header["tensors"]
 
