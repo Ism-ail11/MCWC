@@ -4,7 +4,10 @@ import argparse
 import json
 import os
 
-import torch
+try:
+    import torch
+except ImportError:
+    torch = None  # type: ignore
 
 from mcwc.codec.mcwc_codec import MCWCCodec, MCWCConfig
 

@@ -16,7 +16,7 @@ def compress_bytes(data: bytes, method: str = "zstd", level: int = 3) -> Tuple[b
 
             cctx = zstd.ZstdCompressor(level=level)
             return cctx.compress(data), "zstd"
-        except Exception:
+        except ImportError:
             pass
 
     # zlib fallback (always available)

@@ -2,7 +2,10 @@ from __future__ import annotations
 
 import argparse
 
-import torch
+try:
+    import torch
+except ImportError:
+    torch = None  # type: ignore
 
 from mcwc.codec.mcwc_codec import MCWCCodec, MCWCConfig
 

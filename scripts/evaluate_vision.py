@@ -2,7 +2,10 @@ from __future__ import annotations
 
 import argparse
 
-import torch
+try:
+    import torch
+except ImportError:
+    torch = None  # type: ignore
 from torch.utils.data import DataLoader
 
 from mcwc.data.vision_torchvision import load_cifar100

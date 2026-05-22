@@ -2,7 +2,10 @@ from __future__ import annotations
 
 from typing import Optional
 
-import torch
+try:
+    import torch
+except ImportError:
+    torch = None  # type: ignore
 
 
 def eval_top1_accuracy(model, dataloader, device: str = "cpu", max_batches: int = 100) -> float:

@@ -3,7 +3,10 @@ from __future__ import annotations
 import math
 from typing import Optional
 
-import torch
+try:
+    import torch
+except ImportError:
+    torch = None  # type: ignore
 
 
 def perplexity_from_loss(loss: float) -> float:

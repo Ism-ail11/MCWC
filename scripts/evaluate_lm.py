@@ -2,7 +2,10 @@ from __future__ import annotations
 
 import argparse
 
-import torch
+try:
+    import torch
+except ImportError:
+    torch = None  # type: ignore
 
 from mcwc.data.lm_wikitext import load_wikitext
 from mcwc.eval.lm_eval import eval_lm_perplexity
