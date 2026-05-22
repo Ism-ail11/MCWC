@@ -3,8 +3,14 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Literal, Tuple
 
-import numpy as np
-from scipy.optimize import linear_sum_assignment
+try:
+    import numpy as np
+except ImportError:
+    np = None  # type: ignore
+try:
+    from scipy.optimize import linear_sum_assignment
+except ImportError:
+    linear_sum_assignment = None  # type: ignore
 
 
 AlignMethod = Literal["hungarian", "greedy", "sortproj"]
@@ -21,6 +27,8 @@ def hungarian_max(sim: np.ndarray) -> AlignResult:
 
     sim: [H, H] similarity matrix. Returns perm such that sim[i, perm[i]] is maximized.
     """
+    if linear_sum_assignment is None:
+        raise ImportError("scipy is required for Hungarian alignment (linear_sum_assignment)")
     cost = -sim
     r, c = linear_sum_assignment(cost)
     perm = np.zeros(sim.shape[0], dtype=np.int32)
