@@ -4,8 +4,15 @@ import json
 import struct
 from typing import Any, Dict, List, Tuple
 
-import msgpack
-import numpy as np
+try:
+    import msgpack
+except ImportError:
+    msgpack = None  # type: ignore
+
+try:
+    import numpy as np
+except ImportError:
+    np = None  # type: ignore
 
 from mcwc.utils.compress import compress_bytes, decompress_bytes
 
@@ -14,6 +21,8 @@ VERSION = 0
 
 
 def _pack_ndarray(arr: np.ndarray) -> bytes:
+    if np is None:
+        raise ImportError("NumPy is required for packing arrays. Install numpy via pip")
     arr = np.ascontiguousarray(arr)
     header = msgpack.packb(
         {
@@ -26,6 +35,10 @@ def _pack_ndarray(arr: np.ndarray) -> bytes:
 
 
 def _unpack_ndarray(blob: bytes) -> np.ndarray:
+    if np is None:
+        raise ImportError("NumPy is required for unpacking arrays. Install numpy via pip")
+    if msgpack is None:
+        raise ImportError("msgpack is required to read/write bitstreams. Install msgpack via pip")
     (hlen,) = struct.unpack("<I", blob[:4])
     header = msgpack.unpackb(blob[4:4 + hlen], raw=False)
     data = blob[4 + hlen :]
@@ -34,6 +47,8 @@ def _unpack_ndarray(blob: bytes) -> np.ndarray:
 
 
 def write_bitstream(path: str, header: Dict[str, Any], blobs: List[bytes], compress: str = "zstd") -> None:
+    if msgpack is None:
+        raise ImportError("msgpack is required to write bitstreams. Install msgpack via pip")
     """Write bitstream to disk."""
     # compress blobs
     out_blobs: List[bytes] = []
