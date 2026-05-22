@@ -1,6 +1,9 @@
 from __future__ import annotations
 
-import numpy as np
+try:
+    import numpy as np
+except ImportError:
+    np = None  # type: ignore
 
 
 def cosine_similarity_matrix(A: np.ndarray, B: np.ndarray, eps: float = 1e-12) -> np.ndarray:
